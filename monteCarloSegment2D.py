@@ -25,15 +25,11 @@ b2 = np.array([eps, 1])
 # Case 1: regulare function polynom f(x) = x^2 + y^2
 #---------------------------------------------------
 
-def param(a, b, t):
-	#print "a = ", a
-	#print "b = ", b
-	#print "t = ", t
-	#p = 
+def param(t, s, eps):
 
-	return t*a + (1-t)*b
+	return (-eps + 2*t*eps, -1 + 2*s)
 
-def monteCarlo_Regul_Segment(a1, b1, a2, b2, N):
+def monteCarlo_Regul_Segment(eps, N):
 
 
 	randValues = np.random.uniform(low=0,high=1,size=(N,2))
@@ -47,12 +43,13 @@ def monteCarlo_Regul_Segment(a1, b1, a2, b2, N):
 	print "randY"
 	print randY
 		
-	f_moy = (sum( param(a1, b1, randX)**2 + param(a2, b2, randY)**2 ))/N
+	phiX, phiY = param(randX, randY, eps)		
+		
+	f_moy = 4*eps(sum( phiX**2 + phiY**2 ))/N
 	print "f_moy",f_moy	
 	#print "f_int=", f_int
 	f_moy2 = (sum((param(a1, b1, randX)**2 + param(a2, b2, randY)**2)**2))/N # f^2_moy = 1/N * sum(f^2(x))
 	print "f_moy2",f_moy2
-	
 	
 
 	error = np.sqrt(sum( (param(a1, b1, randX)**2 + param(a2, b2, randY)**2 - f_moy)**2 )/(N-1)	)/np.sqrt(N)
