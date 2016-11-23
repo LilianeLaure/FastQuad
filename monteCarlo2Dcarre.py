@@ -47,28 +47,29 @@ def monteCarlo_Regul_poly(a, b, c, d, N):
 	return error
 	
 	
-"""	
+
 figure()
 errVec2 = np.array([])
 print " "
 print "Case regular polynom"
+
 for n in N:
 	err2 = monteCarlo_Regul_poly(a,b, c, d, n)
 	errVec2 = np.append(errVec2, err2)
 	#print("n:"+str(n)+"|| error:"+str(err))
 
 
-plt.plot(np.log(N), np.log(errVec2), "r", label='error')
+plt.plot(np.log(N), np.log(errVec2), "r", np.log(N), -0.5*np.log(N) - 0.88, "b")
 #plt.plot( np.log(N), np.log(10/np.sqrt(subInterval)*1/N + 0.0085), "b", label='$c/\sqrt{n}x+A$')
 plt.title("Case 2D regular polynom $x^{2}+y^{2}$")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
-plt.legend(loc=1)
+
 #plt.legend(loc='best')
-plt.show()"""
+plt.show()
 
 
-
+"""
 #-------------------------------- (b-a)*(d-c)*f_moy----------
 # Case 2: singular function  f(x) = 1/|x-y|
 #------------------------------------------
@@ -87,7 +88,7 @@ def monteCarlo_Sing(a, b, c, d, N):
 	
 	return error
 
-"""
+
 figure()
 errVec3 = np.array([])
 print " "
@@ -102,8 +103,8 @@ plt.plot(log(N), errVec3 )
 plt.title("Case 2D singular $1/(|x-y|)$")
 plt.xlabel("log(N)")
 plt.ylabel("err")
-plt.show()
-"""
+plt.show()"""
+
 
 
 #-------------------------------- (b-a)*(d-c)*f_moy----------
@@ -137,7 +138,7 @@ def monteCarlo_Sing(a, b, c, d, N):
 	
 	return error
 
-
+"""
 figure()
 errVec3 = np.array([])
 print " "
@@ -152,4 +153,4 @@ plt.plot(log(N), log(errVec3), "b", log(N), -0.49*log(N)-0.25, "r" )
 plt.title("Case 2D singular $ln(|x-y|)$ || pente = -0.49")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
-plt.show()
+plt.show()"""
