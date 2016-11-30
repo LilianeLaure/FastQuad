@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import scipy.stats as sp
 import matplotlib.pyplot as plt
 plt.close("all")
 
@@ -19,8 +20,7 @@ def estimateur_erreur(N, f, alpha , beta ):
     #print "Sf = ", Sf, " pour n = ",N
     Sf2 = somme_de_GaussLegendre(N, alpha, (alpha + beta)/2., f) + somme_de_GaussLegendre(N, (alpha + beta)/2., beta, f)
     #print "Sf2 = ", Sf2, " pour n = ",N
-    return Sf - Sf2
-
+    return (Sf - Sf2)/10.
 
 def f(x):    
     return 4
@@ -30,6 +30,10 @@ def g(x):
 
 def h(x):
 	return np.absolute(x)
+
+
+###############################################################################
+###############################################################################
 
 
 N = np.linspace(1, 100, 100)
@@ -68,11 +72,22 @@ fig2.savefig('f.jpg')
 plt.show()
 """
 
+log_err = np.log(errh)
+log_N = np.log(N)
+log_N2 = np.log(N[0:-1:2])
+
+T = sp.linregress(log_N2, log_err)
+print("Coefficient = ", T[0])
 
 fig3=plt.figure()
-plt.plot(np.log(N[0:-1:2]), np.log(errh), 'b')
+plt.plot(log_N2, np.log(errh), 'b')
+plt.plot(log_N, T[0]*log_N + T[1], 'r')
 plt.xlabel('log(N)')
 plt.ylabel('log(errh)')
+legend1 = "errh"
+legend2 = "regression lineaire"
+legends = [legend1, legend2]
+plt.legend(legends)
 fig3.suptitle('erreur de Gauss Legendre pour h(x)=|x|', fontsize=20)
 plt.show()
 #...
