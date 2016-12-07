@@ -31,7 +31,7 @@ def monteCarlo_Tria(P0,P1,N):
     return err
 
 
-#figure()
+figure()
 A=np.array([1,1])
 B=np.array([4,1])
 C=np.array([5,3])
