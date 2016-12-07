@@ -21,7 +21,7 @@ def monteCarlo_Regul_Tria(A,B,C,N):
 def monteCarlo_Tria(P0,P1,N):
     f_moy=sum(P0**2+P1**2)/N
     print "f_moy", f_moy
-    f_moy2=sum((P0**2+P1**2)**2)/2
+    #f_moy2=sum((P0**2+P1**2)**2)/2
     #err=np.sqrt(np.abs((f_moy2-f_moy**2)/N))
     Var=np.abs((1/N)*sum((P0**2+P1**2)**2)-f_moy**2)
     #print "valeur",sum (P0**2+P1**2-f_moy)**2
