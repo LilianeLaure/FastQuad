@@ -10,6 +10,7 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 
+
 N = 1000
 
 #random points in triangle ABC
@@ -50,13 +51,14 @@ for n in range(100,N):
    
 
 plt.plot(log(range(100,N)),log(err),"b")
+plt.plot(log(range(100,N)), -0.5*log(range(100,N))+3.97, "r")
 plt.title("Case 2D quadrangle regular polynom $x^{2}+y^{2}$")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 plt.show()
 
 
-
+'''
 figure()
 plt.scatter(A[0], A[1])
 plt.scatter(B[0], B[1])
@@ -64,4 +66,4 @@ plt.scatter(C[0], C[1])
 plt.scatter(D[0], D[1])
 plt.scatter(Point[0],Point[1])
 plt.show()
-
+'''
