@@ -85,18 +85,7 @@ A2=np.array([-3,-3])
 B2=np.array([1,4])
 C2=np.array([-5,0])
 print("Triangle( A2="+str(A2)+", B2="+str(B2)+", C2="+str(C2)+")")
-'''
-# choose points randomly in triangle
-Point=monteCarlo_Regul_Tria(A,B,C,N)
 
-
-plt.figure()
-plt.scatter(A[0], A[1])
-plt.scatter(B[0], B[1])
-plt.scatter(C[0], C[1])
-plt.scatter(Point[0],Point[1])
-#plt.show()
-'''
 
 err_Reg=np.array([])
 err_Sing = np.array([])
