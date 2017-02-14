@@ -13,8 +13,10 @@ N=1000
 def Tria(A,B,C,N):
     r1 = np.random.uniform(0, 1, N)
     r2 = np.random.uniform(0, 1, N)
-    x=(1-np.sqrt(r1))*A[0]+(np.sqrt(r1)*(1-r2))*B[0]+(r2*np.sqrt(r1))*C[0]
-    y=(1-np.sqrt(r1))*A[1]+(np.sqrt(r1)*(1-r2))*B[1]+(r2*np.sqrt(r1))*C[1]
+    r1min=np.minimum(r1,r2)
+    r2max=np.maximum(r1,r2)
+    x=r1min*A[0]+(r2max-r1min)*B[0]+(1-r2max)*C[0]
+    y=r1min*A[1]+(r2max-r1min)*B[1]+(1-r2max)*C[1]
     P=np.array([x,y])     
     return P
 				
@@ -54,14 +56,14 @@ Point=Tria(A,B,C,N)
 #print "point0",Point[0][0]
 #print "point1",Point[1][0]
 
-'''
+
 plt.figure
 plt.scatter(A[0], A[1])
 plt.scatter(B[0], B[1])
 plt.scatter(C[0], C[1])
 plt.scatter(Point[0],Point[1])
-#plt.show()
-'''
+plt.show()
+
 
 N=size(Point[0])
 

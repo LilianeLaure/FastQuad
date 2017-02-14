@@ -20,8 +20,10 @@ from numpy import linalg as LA
 def monteCarlo_Regul_Tria(A,B,C,N):
     r1 = np.random.uniform(0, 1, N)
     r2 = np.random.uniform(0, 1, N)
-    x=(1-np.sqrt(r1))*A[0]+(np.sqrt(r1)*(1-r2))*B[0]+(r2*np.sqrt(r1))*C[0]
-    y=(1-np.sqrt(r1))*A[1]+(np.sqrt(r1)*(1-r2))*B[1]+(r2*np.sqrt(r1))*C[1]
+    r1min=np.minimum(r1,r2)
+    r2max=np.maximum(r1,r2)
+    x=r1min*A[0]+(r2max-r1min)*B[0]+(1-r2max)*C[0]
+    y=r1min*A[1]+(r2max-r1min)*B[1]+(1-r2max)*C[1]
     P=np.array([x,y])     
     return P
 
@@ -85,7 +87,7 @@ A2=np.array([-3,-3])
 B2=np.array([1,4])
 C2=np.array([-5,0])
 print("Triangle( A2="+str(A2)+", B2="+str(B2)+", C2="+str(C2)+")")
-'''
+
 # choose points randomly in triangle
 Point=monteCarlo_Regul_Tria(A,B,C,N)
 
@@ -96,7 +98,7 @@ plt.scatter(B[0], B[1])
 plt.scatter(C[0], C[1])
 plt.scatter(Point[0],Point[1])
 #plt.show()
-'''
+
 
 err_Reg=np.array([])
 err_Sing = np.array([])
