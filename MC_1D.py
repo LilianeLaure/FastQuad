@@ -2,7 +2,7 @@
 """
 Created on Wed Feb 22 15:06:20 2017
 
-@author: thai
+@author: 3201955
 """
 
 import random
