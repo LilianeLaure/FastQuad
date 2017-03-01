@@ -4,7 +4,6 @@ Created on Wed Nov 23 15:27:20 2016
 
 @author: 3100965
 """
-#f(x,y)=-ln(|x-y|)
 import random 
 import numpy as np
 import math
@@ -38,8 +37,21 @@ def mesure_x_y(a1,b1,a2,b2):
     return Point
 '''
 
-# singular: -ln(|x-y|)
-def monteCarlo_err(Point1, Point2):
+#regular : e^(x+y)
+def monteCarlo_err_reg(Point1, Point2):
+    x1, x2 = Point1
+    y1, y2 = Point2
+    N = len(x1)
+    
+    f_moy = sum(exp(x1+x2+y1+y2))/N
+    Var = np.abs((1/N)*sum(exp(x1+x2+y1+y2)**2) - f_moy**2)
+    err = np.sqrt(Var/N)*1.96
+    
+    return err
+    
+
+# singular : -ln(|x-y|)
+def monteCarlo_err_sing(Point1, Point2):
     x1, x2 = Point1
     y1, y2 = Point2
     N=len(x1)
@@ -51,18 +63,30 @@ def monteCarlo_err(Point1, Point2):
     return err
 
 #--------------------------------------------------
-
-#dist=mesure_x_y(a1,b1,a2,b2)
-err=np.array([])
 figure()
+err = np.array([])
 for n in range(100,N):
     Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
     Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
 
-    err=np.append(err,monteCarlo_err(Point1,Point2))
+    err=np.append(err,monteCarlo_err_sing(Point1,Point2))
 
 plt.plot(np.log(range(100,N)),np.log(err),"b")
 plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))-0.87, "r")
-plt.title("Case 2 Segments Singular polynom $-ln(|x-y|)$|| pente = -0.5")
+plt.title("Case 1 Segments Singular polynom $-ln(|x-y|)$|| pente = -0.5")
+plt.xlabel("log(N)")
+plt.ylabel("log(err)")
+
+figure()
+err1 = np.array([])
+for n in range(100,N):
+    Point3 = monteCarlo2Seg(a1, b1, n) # points of segment 1
+    Point4 = monteCarlo2Seg(a2, b2, n) # points of segment 2
+
+    err1=np.append(err1,monteCarlo_err_reg(Point3,Point4))
+    
+plt.plot(np.log(range(100,N)),np.log(err1),"b")
+plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+0.98, "r")
+plt.title("Case 2 Segments Regular polynom $exp(x+Y)$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
