@@ -6,6 +6,7 @@ Created on Wed Nov 23 14:39:42 2016
 """
 import random 
 import numpy as np
+from numpy.linalg import norm
 import math
 import matplotlib.pyplot as plt
 
@@ -47,12 +48,12 @@ def monteCarlo_Tria_Reg(Aire,P0,P1,N):
 
 #1/|x-y|
 def monteCarlo_Tria_Sing(Aire,P0,P1,N):
-    f_moy=sum(1/np.sqrt(P0**2+P1**2))/N
+    f_moy=sum(1/np.abs(P0-P1))/N
     #print "f_moy", f_moy
     f_int=Aire*f_moy
-    f_moy2=sum(1/(P0**2+P1**2))
+    f_moy2=sum(1/np.abs(P0-P1)**2)
     #err=np.sqrt(np.abs((f_moy2-f_moy**2)/N))
-    Var=np.abs((f_moy2-N*f_moy**2)/(N-1))
+    Var=(f_moy2-N*f_moy**2)/(N-1)
     #print "valeur",sum (P0**2+P1**2-f_moy)**2
     err = Aire*np.sqrt(Var/N)*1.96/f_int
     #print "var", Var
@@ -60,9 +61,9 @@ def monteCarlo_Tria_Sing(Aire,P0,P1,N):
     return err
 
 
-A=np.array([1,1])
-B=np.array([4,1])
-C=np.array([5,3])
+A=np.array([0,1])
+B=np.array([0.9,1])
+C=np.array([0,2])
 Point=Tria(A,B,C,N)
 #print "point:",Point
 #print "point0",Point[0][0]
@@ -88,10 +89,10 @@ for n in range(100,N):
     err=np.append(err,monteCarlo_Tria_Reg(Aire,Point[0],Point[1],n))
     #print err
 plt.plot(log(range(100,N)),log(err),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))+3.37, "r")
+plt.plot(log(range(100,N)), -0.5*log(range(100,N))-0.93, "r")
 print "reg",err[500]
 
-plt.title("Case 2D triangular regular polynom $x^{2}+y^{2}$|| pente = -0.5")
+plt.title("Case 2D triangular regular $e^{x+y}$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 plt.show()
@@ -103,10 +104,10 @@ for n in range(100,N):
     Point=Tria(A,B,C,n)
     err2=np.append(err2,monteCarlo_Tria_Sing(Aire,Point[0],Point[1],n))
 plt.plot(log(range(100,N)),log(err2),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))+-0.25, "r")
+plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.25, "r")
 print "sing", err2[500]
 
-plt.title("Case 2D triangular singular polynom $1/x^{2}-y^{2}$|| pente = -0.5")
+plt.title("Case 2D triangular singular $1/|x-y|$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 plt.show()
