@@ -45,7 +45,7 @@ def monteCarlo_err(Point1, Point2):
 
 	Var=np.abs((2/N)*sum(sum(-np.log(np.sqrt((x1 - y1)**2 + (x2 - y2)**2)))**2)-f_moy**2)
 	err = np.sqrt(Var*2/N)*1.96
- 
+     
 	return err 
 
 
@@ -60,23 +60,24 @@ listEps = np.array([0, 0.1, 0.2, 0.5, 1, 1.5])
 figure()
 for eps in listEps:
 
-	a1 = np.array([-eps , -1])
-	b1 = np.array([-eps, 1])
-	a2 = np.array([eps,- 1])
-	b2 = np.array([eps, 1])
+    a1 = np.array([-eps , -1])
+    b1 = np.array([-eps, 1])
+    a2 = np.array([eps,- 1])
+    b2 = np.array([eps, 1])
 	
 	
 	
 	#dist=mesure_x_y(a1,b1,a2,b2)
-	err=np.array([])
-	for n in range(100,N):
-		Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
-		Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
-	
-		err=np.append(err,monteCarlo_err(Point1,Point2))
-	
-	plt.plot(log(range(100,N)),log(err), label = str(eps))
-	plt.plot(log(range(100,N)), -0.5*log(range(100,N))-0.55, "r")
+    err=np.array([])
+    for n in range(100,N):
+        Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
+        Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
+        err=np.append(err,monteCarlo_err(Point1,Point2))
+    
+    print "eps :",eps
+    print "err",err[100]
+    plt.plot(log(range(100,N)),log(err), label = str(eps))
+    plt.plot(log(range(100,N)), -0.5*log(range(100,N))-0.55, "r")
 
 
 plt.legend(loc = 2)

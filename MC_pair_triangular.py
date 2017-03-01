@@ -30,19 +30,20 @@ def monteCarlo_Regul_Tria(A,B,C,N):
 # returns error for function f(x, y) = x^2 + y^2
 def monteCarlo_Tria_regul(P1,P2,N):
 	
-	x1 = P1[0]
-	y1 = P1[1]
-	
-	x2 = P2[0]
-	y2 = P2[1]
-
-	f_moy=sum(x1**2 + y1**2 + x2**2 + y2**2)/N
-	#print "f_moy", f_moy
-	#f_moy2=sum((x1**2 + y1**2 + x2**2 + y2**2)**2)/2
-	#err=np.sqrt(np.abs((f_moy2-f_moy**2)/N))
-	Var=np.abs((1/N)*sum((x1**2 + y1**2 + x2**2 + y2**2)**2)-f_moy**2)
-	err = np.sqrt(Var/N)*1.96
-	return err
+    x1 = P1[0]
+    y1 = P1[1]
+    	
+    x2 = P2[0]
+    y2 = P2[1]
+    
+    f_moy=sum(x1**2 + y1**2 + x2**2 + y2**2)/N
+    #print "f_moy", f_moy
+    #f_moy2=sum((x1**2 + y1**2 + x2**2 + y2**2)**2)/2
+    #err=np.sqrt(np.abs((f_moy2-f_moy**2)/N))
+    Var=np.abs((1/N)*sum((x1**2 + y1**2 + x2**2 + y2**2)**2)-f_moy**2)
+    err = np.sqrt(Var/N)*1.96
+    print err
+    return err
 
 
 # returns error for function f(x, y) = 1/|x-y|
@@ -89,13 +90,13 @@ C2=np.array([-5,0])
 print("Triangle( A2="+str(A2)+", B2="+str(B2)+", C2="+str(C2)+")")
 
 # choose points randomly in triangle
-Point=monteCarlo_Regul_Tria(A,B,C,N)
+Point=monteCarlo_Regul_Tria(A1,B1,C1,N)
 
 
 plt.figure()
-plt.scatter(A[0], A[1])
-plt.scatter(B[0], B[1])
-plt.scatter(C[0], C[1])
+plt.scatter(A1[0], A1[1])
+plt.scatter(B1[0], B1[1])
+plt.scatter(C1[0], C1[1])
 plt.scatter(Point[0],Point[1])
 #plt.show()
 
@@ -111,8 +112,8 @@ for n in range(100,N):
 	# calculate error
 	err_Reg = np.append(err_Reg,monteCarlo_Tria_regul(P1, P2, n))
 	err_Sing = np.append(err_Sing,monteCarlo_Tria_sing(P1, P2, n))
-
-
+print err_Reg[100]
+print err_Sing[100]
 # plot regular case
 plt.figure()
 plt.plot(log(range(100,N)),log(err_Reg),"b")

@@ -34,16 +34,16 @@ def monteCarlo_Tria_Reg(P0,P1,N):
     return err
 
 
-#1/|x²-y²|
+#1/|x-y|
 def monteCarlo_Tria_Sing(P0,P1,N):
     f_moy=sum(1/np.sqrt(P0**2-P1**2))/N
-    print "f_moy", f_moy
+    #print "f_moy", f_moy
     #f_moy2=sum((P0**2+P1**2)**2)/2
     #err=np.sqrt(np.abs((f_moy2-f_moy**2)/N))
     Var=np.abs((2/N)*sum(sum(1/np.sqrt(P0**2-P1**2)**2))-f_moy**2)
     #print "valeur",sum (P0**2+P1**2-f_moy)**2
     err = np.sqrt(Var/N)*1.96
-    print "var", Var
+    #print "var", Var
    # print "f_err", err   
     return err
 
@@ -74,9 +74,10 @@ figure()
 for n in range(100,N):
     Point=Tria(A,B,C,n)
     err=np.append(err,monteCarlo_Tria_Reg(Point[0],Point[1],n))
+    #print err
 plt.plot(log(range(100,N)),log(err),"b")
 plt.plot(log(range(100,N)), -0.5*log(range(100,N))+3.37, "r")
-
+print "reg",err[500]
 
 plt.title("Case 2D triangular regular polynom $x^{2}+y^{2}$|| pente = -0.5")
 plt.xlabel("log(N)")
@@ -93,7 +94,7 @@ for n in range(100,N):
     err2=np.append(err2,monteCarlo_Tria_Sing(Point[0],Point[1],n))
 plt.plot(log(range(100,N)),log(err2),"b")
 plt.plot(log(range(100,N)), -0.5*log(range(100,N))+-0.25, "r")
-
+print "sing", err2[500]
 
 plt.title("Case 2D triangular singular polynom $1/x^{2}-y^{2}$|| pente = -0.5")
 plt.xlabel("log(N)")
