@@ -43,8 +43,8 @@ def monteCarlo_err_reg(Point1, Point2):
     y1, y2 = Point2
     N = len(x1)
     
-    f_moy = sum(exp(x1+x2+y1+y2))/N
-    Var = np.abs((1/N)*sum(exp(x1+x2+y1+y2)**2) - f_moy**2)
+    f_moy = sum(np.exp(x1+x2+y1+y2))/N
+    Var = np.abs((1/N)*sum(np.exp(x1+x2+y1+y2)**2) - f_moy**2)
     err = np.sqrt(Var/N)*1.96
     
     return err
@@ -87,6 +87,6 @@ for n in range(100,N):
     
 plt.plot(np.log(range(100,N)),np.log(err1),"b")
 plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+0.98, "r")
-plt.title("Case 2 Segments Regular polynom $exp(x+Y)$|| pente = -0.5")
+plt.title("Case 2 Segments Regular polynom $exp(x+y)$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
