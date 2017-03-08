@@ -30,27 +30,30 @@ def mesure_x_y(a1,b1,a2,b2):
     return Point
 '''
 
-#regular : e^(x+y)
+#regular : e^(|x|²+|y|²)
 def monteCarlo_err_reg(Point1, Point2):
     x1, x2 = Point1
     y1, y2 = Point2
     N = len(x1)
     
-    f_moy = sum(np.exp(x1+x2+y1+y2))/N
-    Var = np.abs((1/N)*sum(np.exp(x1+x2+y1+y2)**2) - f_moy**2)
-    err = np.sqrt(Var/N)*1.96
+    f_moy = sum(np.exp(x1**2+x2**2+y1**2+y2**2))/N
+    #f_int=f_moy
+    f2=sum(np.exp(x1**2+x2**2+y1**2+y2**2)**2)
+    Var = np.abs(f2 - N*f_moy**2)/(N-1)
+    err = np.sqrt(Var/N)*1.96/f_moy
     
     return err
     
 # singular : -ln(|x-y|)
 def monteCarlo_err_sing(Point1, Point2):
-    x1, x2 = Point1
-    y1, y2 = Point2
+    x1, y1 = Point1
+    x2, y2 = Point2
     N=len(x1)
     
-    f_moy = sum(-np.log(np.sqrt((x1 - y1)**2 + (x2 - y2)**2)))/N
-    Var = np.abs((1/N)*sum(-np.log(np.sqrt((x1-y1)**2 + (x2-y2)**2)**2))-f_moy**2)
-    err = np.sqrt(Var/N)*1.96
+    f_moy = sum(-np.log(np.sqrt((x1 - x2)**2 + (y1 - y2)**2)))/N
+    f2=sum(-np.log(np.sqrt((x1-x2)**2 + (y1-y2)**2))**2)
+    Var = np.abs((f2-N*f_moy**2)/(N-1))
+    err = np.abs(np.sqrt(Var/N)*1.96/f_moy)
 
     return err
 
@@ -71,8 +74,8 @@ def monteCarlo_err(Point1, Point2):
 # ----------------------------------------------------------------------------
 
 N = 1000
-eps = 0.5
-listEps = np.array([0, 0.1, 0.2, 0.5, 1, 1.5])
+#eps = 0.5
+listEps = np.array([0,0.5, 1, 1.5, 2])
 
 print("===== Case singular =====")
 figure()
@@ -92,7 +95,7 @@ for eps in listEps:
     print "eps :",eps
     print "err",err[100]
     plt.plot(log(range(100,N)),log(err), label = str(eps))
-    plt.plot(log(range(100,N)), -0.5*log(range(100,N))-0.55, "r")
+    plt.plot(log(range(100,N)), -0.5*log(range(100,N))+1.55, "k")
 
 
 plt.legend(loc = 2)
@@ -116,6 +119,6 @@ for eps in listEps:
 
 
 plt.legend(loc = 2)
-plt.title("Case 2 Segments Regular polynom $exp(x+y)$ more eps|| pente = -0.5")
+plt.title("Case 2 Segments Regular polynom $exp(|x|^2+|y|^2)$ more eps|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
