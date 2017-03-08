@@ -60,11 +60,8 @@ def monteCarlo_Rec_sing(P1,P2,N):
 	return err
 
 
-
-
 ############################################################
 ############################################################
-
 
 # rectangle 1
 A1=np.array([1,1])
@@ -73,18 +70,32 @@ C1=np.array([5,3])
 D1=np.array([1,3])
 print("Rectangle1:  ( A1="+str(A1)+", B1="+str(B1)+", C1="+str(C1)+", D1="+str(D1)+")")
 
-
-
-A2=np.array([-1,-4])
+# rectangle 2
+A2=np.array([0,0])
 B2=np.array([-2,1])
-C2=np.array([3,3])
-D2=np.array([1,0])
+C2=np.array([3,2])
+D2=np.array([3,0])
 print("Rectangle2:  ( A2="+str(A2)+", B2="+str(B2)+", C2="+str(C2)+", D2="+str(D2)+")")
-#Point = monteCarlo_quadrangle(A,B,C,D,N)
+
+Point1=monteCarlo_quadrangle(A1,B1,C1,D1,N)
+Point2=monteCarlo_quadrangle(A2,B2,C2,D2,N)
+
+plt.figure()
+plt.scatter(A1[0], A1[1])
+plt.scatter(B1[0], B1[1])
+plt.scatter(C1[0], C1[1])
+plt.scatter(D1[0], D1[1])
+plt.scatter(Point1[0],Point1[1])
+plt.scatter(A2[0], A2[1],c='r')
+plt.scatter(B2[0], B2[1],c='r')
+plt.scatter(C2[0], C2[1],c='r')
+plt.scatter(D2[0], D2[1],c='r')
+plt.scatter(Point2[0],Point2[1],c='r')
+
+############################################################
 
 err_Reg=np.array([])
 err_Sing = np.array([])
-
 
 for n in range(100,N):
 	P1=monteCarlo_quadrangle(A1,B1,C1,D1,n)
@@ -106,19 +117,9 @@ plt.ylabel("log(err)")
 # plot singular case
 plt.figure()
 plt.plot(log(range(100,N)),log(err_Sing),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.48, "r")
+plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.7, "r")
 plt.title("Pair of rectangles singular $1/(|x-y|)$ || pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 
-
-"""
-figure()
-plt.scatter(A[0], A[1])
-plt.scatter(B[0], B[1])
-plt.scatter(C[0], C[1])
-plt.scatter(D[0], D[1])
-plt.scatter(Point[0],Point[1])"""
-
-plt.show()
 
