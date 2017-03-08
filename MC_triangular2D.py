@@ -31,12 +31,12 @@ def Aire_Tria(A,B,C):
     S=np.sqrt(p*(p-a)*(p-b)*(p-c))
     return S
     
-#exp(x+y)
+#exp(-|x-y|²)
 def monteCarlo_Tria_Reg(Aire,P0,P1,N):
-    f_moy=sum(np.exp(P0+P1))/N
+    f_moy=sum(np.exp(-np.abs(P0-P1)**2))/N
     f_int=Aire*f_moy
     #print "f_moy", f_moy
-    f_moy2=sum(np.exp(P0+P1)**2)
+    f_moy2=sum(np.exp(-np.abs(P0-P1)**2)**2)
     #err=np.sqrt(np.abs((f_moy2-f_moy**2)/N))
     Var=np.abs(f_moy2-N*f_moy**2)/(N-1)
     #print "valeur",sum (P0**2+P1**2-f_moy)**2
@@ -89,7 +89,7 @@ for n in range(100,N):
     err=np.append(err,monteCarlo_Tria_Reg(Aire,Point[0],Point[1],n))
     #print err
 plt.plot(log(range(100,N)),log(err),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))-0.93, "r")
+plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.25, "r")
 print "reg",err[500]
 
 plt.title("Case 2D triangular regular $e^{x+y}$|| pente = -0.5")

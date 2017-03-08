@@ -12,9 +12,9 @@ import matplotlib.pyplot as plt
 N = 1000
 eps = 0.5
 
-a1 = np.array([eps , -1])
+a1 = np.array([-eps , -1])
 b1 = np.array([-eps, 1])
-a2 = np.array([-eps,- 1])
+a2 = np.array([eps,- 1])
 b2 = np.array([eps, 1])
 
 #on choisi aléatoirement des points sur chaque segment
@@ -37,15 +37,15 @@ def mesure_x_y(a1,b1,a2,b2):
     return Point
 '''
 
-#regular : e^(|x|²+|y|²)
+#regular : e^(-|x-y|²)
 def monteCarlo_err_reg(Point1, Point2):
-    x1, x2 = Point1
-    y1, y2 = Point2
+    x1, y1 = Point1
+    x2, y2 = Point2
     N = len(x1)
     
-    f_moy = sum(np.exp(x1**2+x2**2+y1**2+y2**2))/N
+    f_moy = sum(np.exp(-((x1-x2)**2+(y1-y2)**2)))/N
     #f_int=f_moy
-    f2=sum(np.exp(x1**2+x2**2+y1**2+y2**2)**2)
+    f2=sum(np.exp(-((x1-x2)**2+(y1-y2)**2))**2)
     Var = np.abs(f2 - N*f_moy**2)/(N-1)
     err = np.sqrt(Var/N)*1.96/f_moy
     
@@ -89,7 +89,7 @@ for n in range(100,N):
 
     err1=np.append(err1,monteCarlo_err_reg(Point3,Point4))
 plt.plot(np.log(range(100,N)),np.log(err1),"b")
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+0.25, "r")
-plt.title("Case 2 Segments Regular $exp(|x|^2+|y|^2)$|| pente = -0.5")
+plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))-0.05, "r")
+plt.title("Case 2 Segments Regular $exp(-|x-y|^2)$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")

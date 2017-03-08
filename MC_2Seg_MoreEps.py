@@ -30,7 +30,7 @@ def mesure_x_y(a1,b1,a2,b2):
     return Point
 '''
 
-#regular : e^(|x|²+|y|²)
+#regular : e^(-|x-y|²)
 def monteCarlo_err_reg(Point1, Point2):
     x1, x2 = Point1
     y1, y2 = Point2
@@ -119,6 +119,6 @@ for eps in listEps:
 
 
 plt.legend(loc = 2)
-plt.title("Case 2 Segments Regular polynom $exp(|x|^2+|y|^2)$ more eps|| pente = -0.5")
+plt.title("Case 2 Segments Regular polynom $exp(-|x-y|^2)$ more eps|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")

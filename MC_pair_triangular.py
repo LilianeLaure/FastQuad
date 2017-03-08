@@ -38,7 +38,7 @@ def Aire_Tria(A,B,C):
     return S
     
     
-# returns error for function f(x, y) = exp(|x|^2 + |y|^2)
+# returns error for function f(x, y) = exp(-|x-y|^2)
 def monteCarlo_Tria_regul(Aire,P1,P2,N):
     
     x1 = P1[0]
@@ -47,10 +47,10 @@ def monteCarlo_Tria_regul(Aire,P1,P2,N):
     x2 = P2[0]
     y2 = P2[1]
     
-    f_moy=sum(np.exp(x1**2 + y1**2 + x2**2 + y2**2))/N
+    f_moy=sum(np.exp(-((x1-x2)**2 + (y1-y2)**2)))/N
     f_int=Aire*f_moy
     #print "f_moy", f_moy
-    f_moy2=sum(np.exp(x1**2 + y1**2 + x2**2 + y2**2)**2)
+    f_moy2=sum(np.exp(-((x1-x2)**2 + (y1-y2)**2))**2)
     #err=np.sqrt(np.abs((f_moy2-f_moy**2)/N))
     Var=np.abs(f_moy2-N*f_moy**2)/(N-1)
 
@@ -129,15 +129,15 @@ print err_Sing[100]
 # plot regular case
 plt.figure()
 plt.plot(log(range(100,N)),log(err_Reg),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.84, "r")
-plt.title("Pair of triangles regular polynom $exp^{|x|^{2}+|y|^{2}}$|| pente = -0.5")
+plt.plot(log(range(100,N)), -0.5*log(range(100,N))-0.24, "r")
+plt.title("Pair of triangles regular polynom $exp^{-|x-y|^{2}}$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 
 # plot singular case
 plt.figure()
 plt.plot(log(range(100,N)),log(err_Sing),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.7, "r")
+plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.2, "r")
 plt.title("Pair of triangles singular $1/(|x-y|)$ || pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
