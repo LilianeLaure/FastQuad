@@ -30,34 +30,36 @@ def monteCarlo_quadrangle(A,B,C,D,N):
 
 
 # returns error for function f(x, y) = x^2 + y^2
+# funtion f(x,y)) = exp(-|x-y|^2)
 def monteCarlo_Rec_regul(P1,P2,N):
-	
-	x1 = P1[0]
-	y1 = P1[1]
-	
-	x2 = P2[0]
-	y2 = P2[1]
+    x1 = P1[0]
+    y1 = P1[1]
+    
+    x2 = P2[0]
+    y2 = P2[1]
 
-	f_moy=sum(x1**2 + y1**2 + x2**2 + y2**2)/N
-
-	Var=np.abs((1/N)*sum((x1**2 + y1**2 + x2**2 + y2**2)**2)-f_moy**2)
-	err = np.sqrt(Var/N)*1.96
-	return err
+    #f_moy=sum(x1**2 + y1**2 + x2**2 + y2**2)/N
+    #f_moy=sum(np.exp(-(np.sqrt((x1-x2)**2 + (y1-y2)**2))**2))
+    f_moy=sum(np.exp(-((x1-x2)**2 + (y1-y2)**2))) 
+    
+    #Var=np.abs((1/N)*sum((x1**2 + y1**2 + x2**2 + y2**2)**2)-f_moy**2)
+    Var=np.abs((1/N)*sum(np.exp(-((x1-x2)**2 + (y1-y2)**2))**2)-f_moy**2)
+    err = np.sqrt(Var/N)*1.96
+    return err
 
 
 # returns error for function f(x, y) = 1/|x-y|
 def monteCarlo_Rec_sing(P1,P2,N):
-	
-	x1 = P1[0]
-	y1 = P1[1]
-	
-	x2 = P2[0]
-	y2 = P2[1]
-	f_moy=sum(1/(np.sqrt((x1-x2)**2 + (y1-y2)**2)))/N
+    x1 = P1[0]
+    y1 = P1[1]
+    
+    x2 = P2[0]
+    y2 = P2[1]
+    f_moy=sum(1/(np.sqrt((x1-x2)**2 + (y1-y2)**2)))/N
 
-	Var=np.abs((1/N)*sum((1/(np.sqrt((x1-x2)**2 + (y1-y2)**2)))**2)-f_moy**2)
-	err = np.sqrt(Var/N)*1.96
-	return err
+    Var=np.abs((1/N)*sum((1/(np.sqrt((x1-x2)**2 + (y1-y2)**2)))**2)-f_moy**2)
+    err = np.sqrt(Var/N)*1.96
+    return err
 
 
 ############################################################
@@ -98,12 +100,12 @@ err_Reg=np.array([])
 err_Sing = np.array([])
 
 for n in range(100,N):
-	P1=monteCarlo_quadrangle(A1,B1,C1,D1,n)
-	P2=monteCarlo_quadrangle(A2,B2,C2,D2,n)
+    P1=monteCarlo_quadrangle(A1,B1,C1,D1,n)
+    P2=monteCarlo_quadrangle(A2,B2,C2,D2,n)
 
-	# calculate error
-	err_Reg = np.append(err_Reg, monteCarlo_Rec_regul(P1, P2, n))
-	err_Sing = np.append(err_Sing, monteCarlo_Rec_sing(P1, P2, n))
+    # calculate error
+    err_Reg = np.append(err_Reg, monteCarlo_Rec_regul(P1, P2, n))
+    err_Sing = np.append(err_Sing, monteCarlo_Rec_sing(P1, P2, n))
 
 
 # plot regular case
