@@ -12,9 +12,9 @@ import matplotlib.pyplot as plt
 N = 1000
 eps = 0.5
 
-a1 = np.array([-eps , -1])
+a1 = np.array([eps , -1])
 b1 = np.array([-eps, 1])
-a2 = np.array([eps,- 1])
+a2 = np.array([-eps,- 1])
 b2 = np.array([eps, 1])
 
 #on choisi aléatoirement des points sur chaque segment
@@ -75,7 +75,7 @@ for n in range(100,N):
     err=np.append(err,monteCarlo_err_sing(Point1,Point2))
 print err
 plt.plot(np.log(range(100,N)),np.log(err),"b")
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+1.17, "r")
+plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+1.45, "r")
 plt.title("Case 1 Segments Singular polynom $-ln(|x-y|)$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
@@ -89,7 +89,7 @@ for n in range(100,N):
 
     err1=np.append(err1,monteCarlo_err_reg(Point3,Point4))
 plt.plot(np.log(range(100,N)),np.log(err1),"b")
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))-0.18, "r")
+plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+0.25, "r")
 plt.title("Case 2 Segments Regular $exp(|x|^2+|y|^2)$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")

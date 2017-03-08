@@ -40,11 +40,11 @@ def monteCarlo_Rec_regul(P1,P2,N):
 
     #f_moy=sum(x1**2 + y1**2 + x2**2 + y2**2)/N
     #f_moy=sum(np.exp(-(np.sqrt((x1-x2)**2 + (y1-y2)**2))**2))
-    f_moy=sum(np.exp(-((x1-x2)**2 + (y1-y2)**2))) 
-    
+    f_moy=sum(np.exp(-((x1-x2)**2 + (y1-y2)**2)))/N
+    f2=sum(np.exp(-((x1-x2)**2 + (y1-y2)**2))**2)
     #Var=np.abs((1/N)*sum((x1**2 + y1**2 + x2**2 + y2**2)**2)-f_moy**2)
-    Var=np.abs((1/N)*sum(np.exp(-((x1-x2)**2 + (y1-y2)**2))**2)-f_moy**2)
-    err = np.sqrt(Var/N)*1.96
+    Var=np.abs(f2-N*f_moy**2)/(N-1)
+    err = np.sqrt(Var/N)*1.96/f_moy
     return err
 
 
@@ -56,9 +56,9 @@ def monteCarlo_Rec_sing(P1,P2,N):
     x2 = P2[0]
     y2 = P2[1]
     f_moy=sum(1/(np.sqrt((x1-x2)**2 + (y1-y2)**2)))/N
-
-    Var=np.abs((1/N)*sum((1/(np.sqrt((x1-x2)**2 + (y1-y2)**2)))**2)-f_moy**2)
-    err = np.sqrt(Var/N)*1.96
+    f2=sum(1/(np.sqrt((x1-x2)**2 + (y1-y2)**2))**2)
+    Var=np.abs(f2-N*f_moy**2)/(N-1)
+    err = np.sqrt(Var/N)*1.96/f_moy
     return err
 
 
@@ -66,17 +66,17 @@ def monteCarlo_Rec_sing(P1,P2,N):
 ############################################################
 
 # rectangle 1
-A1=np.array([1,1])
-B1=np.array([4,1])
-C1=np.array([5,3])
-D1=np.array([1,3])
+A1=np.array([0,0])
+B1=np.array([0,1])
+C1=np.array([1,1])
+D1=np.array([1,0])
 print("Rectangle1:  ( A1="+str(A1)+", B1="+str(B1)+", C1="+str(C1)+", D1="+str(D1)+")")
 
 # rectangle 2
-A2=np.array([0,0])
-B2=np.array([-2,1])
-C2=np.array([3,2])
-D2=np.array([3,0])
+A2=np.array([1,0])
+B2=np.array([2,0])
+C2=np.array([2,1])
+D2=np.array([1,1])
 print("Rectangle2:  ( A2="+str(A2)+", B2="+str(B2)+", C2="+str(C2)+", D2="+str(D2)+")")
 
 Point1=monteCarlo_quadrangle(A1,B1,C1,D1,N)
