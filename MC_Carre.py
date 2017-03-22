@@ -30,8 +30,8 @@ def monteCarlo_quadrangle(A,B,C,D,N):
     
 A=np.array([1,0])
 B=np.array([2,0])
-C=np.array([2,1])
-D=np.array([1,1])
+C=np.array([2,0.9])
+D=np.array([1,0.9])
 Point=monteCarlo_quadrangle(A,B,C,D,N)
 
 plt.figure()
@@ -58,18 +58,25 @@ def monteCarlo_Sing(x,y,n):
     return err
 
 #Point = monteCarlo_quadrangle(A,B,C,D,N)
-##########Cas régulier
-err=np.array([])
+
+err1=np.array([])
 err2=np.array([])
 figure()
-for n in range(500,N):
-    Point=monteCarlo_quadrangle(A,B,C,D,n)
-    err=np.append(err,monteCarlo_Reg(Point[0],Point[1],n))
-    err2=np.append(err2,monteCarlo_Sing(Point[0],Point[1],n))
-print "size",size(err),size(err2)
+for n in range(100,1000,10):
+    err1_=0
+    err2_=0
+    for k in range(10):
+        Point=monteCarlo_quadrangle(A,B,C,D,n)
+        err1_=err1_+monteCarlo_Reg(Point[0],Point[1],n)
+        err2_=err2_+monteCarlo_Sing(Point[0],Point[1],n)
+    err1_=err1_/10
+    err2_=err2_/10
+    err1=np.append(err1,err1_)
+    err2=np.append(err2,err2_)
 
-plt.plot(log(range(500,N)),log(err),"b")
-plt.plot(log(range(500,N)), -0.5*log(range(500,N))+0.07, "r")
+print size(err2),size(err1)
+plt.plot(log(range(100,1000,10)),log(err1),"b")
+plt.plot(log(range(100,1000,10)), -0.5*log(range(100,1000,10))+0.07, "r")
 plt.title("Case 2D quadrangle regular $exp(-|x-y|^{2})$")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
@@ -77,12 +84,24 @@ plt.show()
 
 
 figure()
-
-
-plt.plot(log(range(500,N)),log(err2),"b")
-plt.plot(log(range(500,N)), -0.5*log(range(500,N))+0.87, "r")
+plt.plot(log(range(100,1000,10)),log(err2),"b")
+plt.plot(log(range(100,1000,10)), -0.5*log(range(100,1000,10))+0.1, "r")
 plt.title("Case 2D quadrangle singular $1/|x-y|")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 plt.show()
 
+err3=np.array([])
+figure()
+for n in range(500,1500):
+        Point=monteCarlo_quadrangle(A,B,C,D,n)
+        err3_=monteCarlo_Sing(Point[0],Point[1],n)
+        err3=np.append(err3,err3_)
+
+figure()
+plt.plot(log(range(500,1500)),log(err3),"b")
+plt.plot(log(range(500,1500)), -0.5*log(range(500,1500))+0.1, "r")
+plt.title("Case 2D quadrangle singular $1/|x-y|")
+plt.xlabel("log(N)")
+plt.ylabel("log(err)")
+plt.show()

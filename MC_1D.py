@@ -66,12 +66,15 @@ for n in range(100,N):
 figure()
 errVec1 = np.array([])
 print("Case regular exp")
-for n in range(100,N):
-    err1 = monteCarlo_Regul_exp(a, b, n)
-    errVec1 = np.append(errVec1, err1)
+for n in range(100,1000,10):
+    err_=0
+    for k in range(10):
+        err_ = err_+monteCarlo_Regul_exp(a, b, n)
+    err_=err_/10
+    errVec1 = np.append(errVec1, err_)
 
-plt.plot(np.log(range(100,N)), np.log(errVec1))
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))-0.55, "r")
+plt.plot(np.log(range(100,1000,10)), np.log(errVec1))
+plt.plot(np.log(range(100,1000,10)), -0.5*np.log(range(100,1000,10))-0.55, "r")
 plt.title("Case 1D regular $exp^{x}$ || pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
@@ -79,12 +82,15 @@ plt.ylabel("log(err)")
 figure()
 errVec2 = np.array([])
 print("Case regular polynom")
-for n in range(100,N):
-    err2 = monteCarlo_Regul_poly(a, b, n)
-    errVec2 = np.append(errVec2, err2)
+for n in range(100,1000,10):
+    err_=0
+    for k in range(10):
+        err_ = err_+monteCarlo_Regul_poly(a, b, n)
+    err_=err_/10
+    errVec2 = np.append(errVec2, err_)
 
-plt.plot(np.log(range(100,N)), np.log(errVec2))
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+0.55, "r")
+plt.plot(np.log(range(100,1000,10)), np.log(errVec2))
+plt.plot(np.log(range(100,1000,10)), -0.5*np.log(range(100,1000,10))+0.55, "r")
 plt.title("Case 1D regular polynom $x^{2}$ || pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
@@ -92,12 +98,15 @@ plt.ylabel("log(err)")
 figure()
 errVec3 = np.array([])
 print("Case regular singular")
-for n in range(100,N):
-    err3 = monteCarlo_Regul_poly(a, b, n)
-    errVec3 = np.append(errVec3, err3)
+for n in range(100,1000,10):
+    err_=0
+    for k in range(10):
+        err_ = err_+monteCarlo_Regul_poly(a, b, n)
+    err_=err_/10
+    errVec3 = np.append(errVec3, err_)
 
-plt.plot(np.log(range(100,N)), np.log(errVec3))
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+0.55, "r")
+plt.plot(np.log(range(100,1000,10)), np.log(errVec3))
+plt.plot(np.log(range(100,1000,10)), -0.5*np.log(range(100,1000,10))+0.55, "r")
 plt.title("Case 1D singular polynom $|x|$ || pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")

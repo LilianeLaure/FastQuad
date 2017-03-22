@@ -68,28 +68,34 @@ def monteCarlo_err_sing(Point1, Point2):
 #--------------------------------------------------
 figure()#cas singulier
 err = np.array([])
-for n in range(100,N):
-    Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
-    Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
+for n in range(100,1000,10):
+    err_=0
+    for k in range(10):
+        Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
+        Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
+        err_=err_+monteCarlo_err_sing(Point1,Point2)
+    err_=err_/10
+    err=np.append(err,err_)
 
-    err=np.append(err,monteCarlo_err_sing(Point1,Point2))
-print err
-plt.plot(np.log(range(100,N)),np.log(err),"b")
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))+1.45, "r")
-plt.title("Case 1 Segments Singular polynom $-ln(|x-y|)$|| pente = -0.5")
+plt.plot(np.log(range(100,1000,10)),np.log(err),"b")
+plt.plot(np.log(range(100,1000,10)), -0.5*np.log(range(100,1000,10))+1.25, "r")
+plt.title("Case 1 Segments Singular case $-ln(|x-y|)$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 
 #cas régulier
 figure()
 err1 = np.array([])
-for n in range(100,N):
-    Point3 = monteCarlo2Seg(a1, b1, n) # points of segment 1
-    Point4 = monteCarlo2Seg(a2, b2, n) # points of segment 2
-
-    err1=np.append(err1,monteCarlo_err_reg(Point3,Point4))
-plt.plot(np.log(range(100,N)),np.log(err1),"b")
-plt.plot(np.log(range(100,N)), -0.5*np.log(range(100,N))-0.05, "r")
+for n in range(100,1000,10):
+    err_=0
+    for k in range(10):
+        Point3 = monteCarlo2Seg(a1, b1, n) # points of segment 1
+        Point4 = monteCarlo2Seg(a2, b2, n) # points of segment 2
+        err_=err_+monteCarlo_err_reg(Point3,Point4)
+    err_=err_/10
+    err1=np.append(err1,err_)
+plt.plot(np.log(range(100,1000,10)),np.log(err1),"b")
+plt.plot(np.log(range(100,1000,10)), -0.5*np.log(range(100,1000,10))-0.05, "r")
 plt.title("Case 2 Segments Regular $exp(-|x-y|^2)$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")

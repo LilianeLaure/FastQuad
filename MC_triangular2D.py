@@ -81,18 +81,22 @@ plt.show()
 
 N=size(Point[0])
 
-
+Point=np.array([])
 err=np.array([])
 figure()
-for n in range(100,N):
-    Point=Tria(A,B,C,n)
-    err=np.append(err,monteCarlo_Tria_Reg(Aire,Point[0],Point[1],n))
+for n in range(100,1000,10):
+    err_=0
+    for k in range(10):
+        Point=Tria(A,B,C,n)
+        err_=err_+monteCarlo_Tria_Reg(Aire,Point[0],Point[1],n)
+    err_=err_/k
+    err=np.append(err,err_)
     #print err
-plt.plot(log(range(100,N)),log(err),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.25, "r")
-print "reg",err[500]
+plt.plot(log(range(100,1000,10)),log(err),"b")
+plt.plot(log(range(100,1000,10)), -0.5*log(range(100,1000,10))+0.3, "r")
+print "reg",err[4]
 
-plt.title("Case 2D triangular regular $e^{x+y}$|| pente = -0.5")
+plt.title("Case 2D triangular regular $e^{-|x-y|^2}$|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 plt.show()
@@ -100,12 +104,16 @@ plt.show()
 #------------------------case singular
 err2=np.array([])
 figure()
-for n in range(100,N):
-    Point=Tria(A,B,C,n)
-    err2=np.append(err2,monteCarlo_Tria_Sing(Aire,Point[0],Point[1],n))
-plt.plot(log(range(100,N)),log(err2),"b")
-plt.plot(log(range(100,N)), -0.5*log(range(100,N))+0.25, "r")
-print "sing", err2[500]
+for n in range(100,1000,10):
+    err_=0
+    for k in range(10):
+        Point=Tria(A,B,C,n)
+        err_=err_+monteCarlo_Tria_Sing(Aire,Point[0],Point[1],n)
+    err_=err_/k
+    err2=np.append(err2,err_)
+plt.plot(log(range(100,1000,10)),log(err2),"b")
+plt.plot(log(range(100,1000,10)), -0.5*log(range(100,1000,10))+0.25, "r")
+print "sing", err2[5]
 
 plt.title("Case 2D triangular singular $1/|x-y|$|| pente = -0.5")
 plt.xlabel("log(N)")

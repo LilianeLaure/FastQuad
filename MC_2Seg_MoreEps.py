@@ -87,19 +87,23 @@ for eps in listEps:
     b2 = np.array([eps, 1])
     
     err=np.array([])
-    for n in range(100,N):
-        Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
-        Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
-        err=np.append(err,monteCarlo_err_sing(Point1,Point2))
+    for n in range(100,N,10):
+        err_=0
+        for k in range(10):
+            Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
+            Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
+            err_=err_+monteCarlo_err_sing(Point1,Point2)
+        err_=err_/10
+        err=np.append(err,err_)
     
     print "eps :",eps
-    print "err",err[100]
-    plt.plot(log(range(100,N)),log(err), label = str(eps))
-    plt.plot(log(range(100,N)), -0.5*log(range(100,N))+1.55, "k")
+    print "err",err[7]
+    plt.plot(log(range(100,N,10)),log(err), label = str(eps))
+    plt.plot(log(range(100,N,10)), -0.5*log(range(100,N,10))+1.55, "k")
 
 
 plt.legend(loc = 2)
-plt.title("Case 1 Segments Singular polynom $-ln(|x-y|)$ more eps|| pente = -0.5")
+plt.title("Case 1 Segments Singular case $-ln(|x-y|)$ more eps|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
 
@@ -107,18 +111,22 @@ print("===== Case regular =====")
 figure()
 for eps in listEps:
     err1=np.array([])
-    for n in range(100,N):
-        Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
-        Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
-        err1=np.append(err1,monteCarlo_err_reg(Point1,Point2))
+    for n in range(100,N,10):
+        err_=0
+        for k in range(10):
+            Point1 = monteCarlo2Seg(a1, b1, n) # points of segment 1
+            Point2 = monteCarlo2Seg(a2, b2, n) # points of segment 2
+            err_=err_+monteCarlo_err_reg(Point1,Point2)
+        err_=err_/10
+        err1=np.append(err1,err_)
     
     print "eps :",eps
-    print "err",err1[100]
-    plt.plot(log(range(100,N)),log(err1), label = str(eps))
-    #plt.plot(log(range(100,N)), -0.5*log(range(100,N))-0.55, "r")
+    print "err",err1[10]
+    plt.plot(log(range(100,N,10)),log(err1), label = str(eps))
+    #plt.plot(log(range(100,N,10)), -0.5*log(range(100,N,10))-0.55, "r")
 
 
 plt.legend(loc = 2)
-plt.title("Case 2 Segments Regular polynom $exp(-|x-y|^2)$ more eps|| pente = -0.5")
+plt.title("Case 2 Segments Regular case $exp(-|x-y|^2)$ more eps|| pente = -0.5")
 plt.xlabel("log(N)")
 plt.ylabel("log(err)")
