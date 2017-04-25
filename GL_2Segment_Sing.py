@@ -53,7 +53,7 @@ def calculateInt(int1, int2, order, t, w):
 	a2, b2 = int2	
 	
 	# In the singular case decrease order the closer you get to singularity
-	t,w = np.polynomial.legendre.leggauss(order) # t in [-1,1], w weight, ordre 50
+	#t,w = np.polynomial.legendre.leggauss(order) # t in [-1,1], w weight, ordre 50
 	
 	# calculate parametrisation of vector t
 	gamma = segment(a1, b1, t)

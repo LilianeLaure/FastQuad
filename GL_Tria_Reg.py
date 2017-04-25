@@ -1,10 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov  9 15:23:31 2016
+Created on Wed Apr 19 15:32:57 2017
 
-@author: 3417212
+@author: 3503833
+
+Calculate integral over regular triangle
 """
+
 
 import numpy as np
 from numpy.linalg import norm
@@ -90,7 +92,7 @@ def calculateCompositeInt(int1, int2, Nb_Int, order, t, w):
 		for j in range(0, Nb_Int):
 			newInt1 = [np.array(a1 + i*(b1-a1)/Nb_Int), np.array(a1 + (i+1)*(b1-a1)/Nb_Int)]
 			newInt2 = [np.array(a2 + j*(b2-a2)/Nb_Int), np.array(a2 + (j+1)*(b2-a2)/Nb_Int)]
-			#print "i =", i, "j =", j, "a1 =", a1, "b1 =", b1, "a2 =", a2, "bt,w2 =", b2		
+			#print "i =", i, "j =", j, "a1 =", a1, "b1 =", b1, "a2 =", a2, "b2 =", b2		
 			#print "new [a1, b1] =", newInt1
 			#print "new [a2, b2] =", newInt2
 			calcI = calculateInt(newInt1, newInt2, order, t, w)
